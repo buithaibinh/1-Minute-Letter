@@ -1,0 +1,10 @@
+retainedFiles:
+  - README.md
+history:
+  - date: '2025-12-03T10:14:14.838Z'
+    deleted: 3
+    retained: 1
+    files:
+      - cis/workflows/storytelling/instructions.md.bak
+      - cis/workflows/storytelling/story-types.csv.bak
+      - cis/workflows/storytelling/template.md.bak

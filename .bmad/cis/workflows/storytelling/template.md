@@ -1,75 +1,113 @@
-# Story: {{story_title}}
+# Story Output
 
-**Ngày tạo:** {{date}}
-**Tác giả:** {{user_name}}
-**Mục đích:** {{story_purpose}}
+**Created:** {{date}}
+**Storyteller:** {{agent_role}} {{agent_name}}
+**Author:** {{user_name}}
+
+## Story Information
+
+**Story Type:** {{story_type}}
+
+**Framework Used:** {{framework_name}}
+
+**Purpose:** {{story_purpose}}
+
+**Target Audience:** {{target_audience}}
+
+## Story Structure
+
+### Opening Hook
+
+{{opening_hook}}
+
+### Core Narrative
+
+{{core_narrative}}
+
+### Key Story Beats
+
+{{story_beats}}
+
+### Emotional Arc
+
+{{emotional_arc}}
+
+### Resolution/Call to Action
+
+{{resolution}}
+
+## Complete Story
+
+{{complete_story}}
+
+## Story Elements Analysis
+
+### Character/Voice
+
+{{character_voice}}
+
+### Conflict/Tension
+
+{{conflict_tension}}
+
+### Transformation/Change
+
+{{transformation}}
+
+### Emotional Touchpoints
+
+{{emotional_touchpoints}}
+
+### Key Messages
+
+{{key_messages}}
+
+## Variations AND Adaptations
+
+### Short Version (Tweet/Social)
+
+{{short_version}}
+
+### Medium Version (Email/Blog)
+
+{{medium_version}}
+
+### Extended Version (Article/Presentation)
+
+{{extended_version}}
+
+## Usage Guidelines
+
+### Best Channels
+
+{{best_channels}}
+
+### Audience Considerations
+
+{{audience_considerations}}
+
+### Tone AND Voice Notes
+
+{{tone_notes}}
+
+### Adaptation Suggestions
+
+{{adaptation_suggestions}}
+
+## Next Steps
+
+### Refinement Opportunities
+
+{{refinement_opportunities}}
+
+### Additional Versions Needed
+
+{{additional_versions}}
+
+### Testing/Feedback Plan
+
+{{feedback_plan}}
 
 ---
 
-## Tổng quan câu chuyện
-
-**Chủ đề chính:** {{main_theme}}
-**Đối tượng người nghe:** {{target_audience}}
-**Thông điệp cốt lõi:** {{core_message}}
-
----
-
-## Framework được sử dụng
-
-**Framework:** {{selected_framework}}
-**Lý do chọn:** {{framework_rationale}}
-
----
-
-## Cấu trúc câu chuyện
-
-{{#story_structure}}
-### {{section_name}}
-{{section_content}}
-{{/story_structure}}
-
----
-
-## Nhân vật chính
-
-{{#characters}}
-### {{character_name}}
-- **Vai trò:** {{character_role}}
-- **Đặc điểm:** {{character_traits}}
-- **Mục tiêu:** {{character_goals}}
-- **Thách thức:** {{character_challenges}}
-{{/characters}}
-
----
-
-## Các yếu tố quan trọng
-
-### Xung đột
-{{conflict_description}}
-
-### Giải pháp
-{{solution_description}}
-
-### Bài học / Thông điệp
-{{key_takeaway}}
-
----
-
-## Chi tiết câu chuyện
-
-{{full_story_content}}
-
----
-
-## Ghi chú và ý tưởng
-
-{{notes_and_ideas}}
-
----
-
-## Đánh giá
-
-- **Độ hấp dẫn:** {{engagement_score}}/10
-- **Tính rõ ràng:** {{clarity_score}}/10
-- **Tính thuyết phục:** {{persuasiveness_score}}/10
-- **Phản hồi:** {{feedback}}
+_Story crafted using the BMAD CIS storytelling framework_
