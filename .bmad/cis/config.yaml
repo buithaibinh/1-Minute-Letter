@@ -1,0 +1,20 @@
+# BMAD CIS Workflow Configuration
+# This file contains global settings for all BMAD workflows
+
+# User Information
+user_name: "User"
+communication_language: "vi"  # Vietnamese
+
+# Output Configuration
+output_folder: ".bmad/cis/output"
+
+# Workflow Settings
+default_date_format: "YYYY-MM-DD"
+auto_save: true
+
+# Available Workflows
+workflows:
+  - design-thinking
+  - problem-solving
+  - innovation-strategy
+  - storytelling
