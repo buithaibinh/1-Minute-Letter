@@ -50,15 +50,17 @@ export function saveLetter(letter: string, generatedAt: string): void {
 /**
  * Generate a new letter via API
  * Automatically detects browser language and sends to API
+ * @param feeling - Optional feeling text from user (not persisted)
  */
-export async function generateLetter(): Promise<LetterResponse> {
+export async function generateLetter(feeling?: string): Promise<LetterResponse> {
   // Detect browser language
   const language = getBrowserLanguage();
 
   const response = await $fetch<LetterResponse>('/api/letter', {
     method: 'POST',
     body: {
-      language
+      language,
+      feeling: feeling?.trim() || undefined // Only send if provided, don't send empty strings
     }
   });
 

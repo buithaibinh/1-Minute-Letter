@@ -22,9 +22,10 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  // Get language from request body, default to English
+  // Get language and optional feeling from request body
   const body = await readBody(event).catch(() => ({}));
   const requestedLanguage = body?.language || 'en';
+  const feeling = body?.feeling?.trim() || null; // Get feeling if provided, null if not
 
   // Map language code to language name for prompt
   // Simple mapping for common languages, fallback to English
@@ -69,8 +70,8 @@ export default defineEventHandler(async (event) => {
   const languageCode = requestedLanguage.toLowerCase();
   const languageName = languageMap[languageCode] || 'English';
 
-  // Prompt template for "future self" letter
-  const prompt = `You are writing a short, quiet letter from the perspective of the reader's future self.
+  // Build prompt template for "future self" letter
+  let prompt = `You are writing a short, quiet letter from the perspective of the reader's future self.
 
 Guidelines:
 - Keep it under 200 words
@@ -80,8 +81,22 @@ Guidelines:
 - Avoid giving solutions or telling them what to do
 - Simply acknowledge their current state and offer quiet presence
 - No motivational language, no "you should", no "you can do it"
-- Just understanding and companionship
-- IMPORTANT: Write the entire letter in ${languageName}. The letter must be written completely in ${languageName}, not mixed with other languages.
+- Just understanding and companionship`;
+
+  // If feeling is provided, gently reflect it - NOT analyze or solve
+  if (feeling) {
+    prompt += `\n\nContext (for gentle reflection only, NOT for analysis or solutions):
+- The reader shared: "${feeling}"
+- Gently acknowledge this feeling with understanding and quiet companionship
+- Do NOT analyze, diagnose, or try to "fix" anything
+- Do NOT give advice based on this feeling
+- Do NOT label or interpret the feeling - simply be present with it
+- If the feeling is vague or minimal, respond with presence rather than interpretation`;
+  } else {
+    prompt += `\n\nNote: No specific feeling was shared. Write a letter of quiet companionship that acknowledges the general human experience without guessing or assuming specific emotions.`;
+  }
+
+  prompt += `\n\n- IMPORTANT: Write the entire letter in ${languageName}. The letter must be written completely in ${languageName}, not mixed with other languages.
 
 Write the letter now:`;
 

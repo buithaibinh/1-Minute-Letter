@@ -34,14 +34,36 @@
           :generated-at="generatedAt"
         />
 
-        <!-- Initial State: Button to generate -->
+        <!-- Show feeling text below letter (if user provided one) -->
+        <div v-if="letter && feeling.trim()" class="feeling-context">
+          <p class="feeling-context-label">What you shared:</p>
+          <p class="feeling-context-text">{{ feeling }}</p>
+        </div>
+
+        <!-- Initial State: Button to generate with optional feeling input -->
         <div v-else class="initial-state">
+          <!-- Optional feeling input - gentle invitation -->
+          <FeelingInput
+            v-model="feeling"
+            class="mb-8"
+          />
+
           <button
             @click="handleGenerateLetter"
             class="generate-button"
             :disabled="loading"
           >
             Receive a letter
+          </button>
+        </div>
+
+        <!-- Option to generate new letter (when letter already exists) -->
+        <div v-if="letter && !loading" class="new-letter-section">
+          <button
+            @click="clearFeelingForNewLetter"
+            class="new-letter-button"
+          >
+            Receive another letter
           </button>
         </div>
       </div>
@@ -61,6 +83,7 @@ const letter = ref<string | null>(null);
 const generatedAt = ref<string | null>(null);
 const loading = ref(false);
 const error = ref<string | null>(null);
+const feeling = ref<string>('');
 
 /**
  * Check for today's letter on mount
@@ -81,19 +104,35 @@ async function handleGenerateLetter() {
   error.value = null;
 
   try {
-    const response = await generateLetter();
+    // Pass feeling (can be empty string) to generateLetter
+    const response = await generateLetter(feeling.value.trim());
 
     letter.value = response.letter;
     generatedAt.value = response.generatedAt;
 
-    // Save to localStorage
+    // Save to localStorage (feeling is NOT saved - only used for generation)
     saveLetter(response.letter, response.generatedAt);
+
+    // Keep feeling in state - user can read letter while still seeing their feeling text
+    // Feeling will be cleared on page reload or when user generates a new letter
+    // This allows user to "stay with their feeling a bit longer, not be 'reset' too quickly"
 
   } catch (err: any) {
     error.value = err.message || 'Unable to generate letter. Please try again.';
   } finally {
     loading.value = false;
   }
+}
+
+/**
+ * Clear feeling when user wants to generate a new letter
+ * (called when user clicks "Receive a letter" again)
+ */
+function clearFeelingForNewLetter() {
+  feeling.value = '';
+  letter.value = null;
+  generatedAt.value = null;
+  error.value = null;
 }
 </script>
 
@@ -130,6 +169,38 @@ async function handleGenerateLetter() {
   @apply border-2 border-gray-900;
   @apply transition-colors;
   @apply hover:bg-gray-800;
+}
+
+.new-letter-section {
+  @apply text-center mt-8 pt-8;
+  @apply border-t border-gray-200;
+}
+
+.new-letter-button {
+  @apply px-6 py-2;
+  @apply bg-white text-gray-700;
+  @apply font-serif text-sm;
+  @apply rounded-none;
+  @apply border border-gray-300;
+  @apply transition-colors;
+  @apply hover:bg-gray-50;
+}
+
+.feeling-context {
+  @apply mt-8 pt-8;
+  @apply border-t border-gray-200;
+  @apply max-w-2xl mx-auto px-4;
+}
+
+.feeling-context-label {
+  @apply text-xs text-gray-500;
+  @apply font-serif mb-2;
+}
+
+.feeling-context-text {
+  @apply text-sm text-gray-600;
+  @apply font-serif italic;
+  @apply leading-relaxed;
 }
 </style>
 
