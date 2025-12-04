@@ -28,20 +28,21 @@
         </div>
 
         <!-- Letter Display -->
-        <LetterDisplay
-          v-else-if="letter"
-          :letter="letter"
-          :generated-at="generatedAt"
-        />
+        <template v-if="letter">
+          <LetterDisplay
+            :letter="letter"
+            :generated-at="generatedAt"
+          />
 
-        <!-- Show feeling text below letter (if user provided one) -->
-        <div v-if="letter && feeling.trim()" class="feeling-context">
-          <p class="feeling-context-label">What you shared:</p>
-          <p class="feeling-context-text">{{ feeling }}</p>
-        </div>
+          <!-- Show feeling text below letter (if user provided one) -->
+          <div v-if="feeling.trim()" class="feeling-context">
+            <p class="feeling-context-label">What you shared:</p>
+            <p class="feeling-context-text">{{ feeling }}</p>
+          </div>
+        </template>
 
         <!-- Initial State: Button to generate with optional feeling input -->
-        <div v-else class="initial-state">
+        <div v-else-if="!loading && !error" class="initial-state">
           <!-- Optional feeling input - gentle invitation -->
           <FeelingInput
             v-model="feeling"
@@ -54,16 +55,6 @@
             :disabled="loading"
           >
             Receive a letter
-          </button>
-        </div>
-
-        <!-- Option to generate new letter (when letter already exists) -->
-        <div v-if="letter && !loading" class="new-letter-section">
-          <button
-            @click="clearFeelingForNewLetter"
-            class="new-letter-button"
-          >
-            Receive another letter
           </button>
         </div>
       </div>
@@ -114,25 +105,15 @@ async function handleGenerateLetter() {
     saveLetter(response.letter, response.generatedAt);
 
     // Keep feeling in state - user can read letter while still seeing their feeling text
-    // Feeling will be cleared on page reload or when user generates a new letter
+    // Feeling will be cleared on page reload
     // This allows user to "stay with their feeling a bit longer, not be 'reset' too quickly"
+    // No "Receive another letter" button - one quiet moment is enough
 
   } catch (err: any) {
     error.value = err.message || 'Unable to generate letter. Please try again.';
   } finally {
     loading.value = false;
   }
-}
-
-/**
- * Clear feeling when user wants to generate a new letter
- * (called when user clicks "Receive a letter" again)
- */
-function clearFeelingForNewLetter() {
-  feeling.value = '';
-  letter.value = null;
-  generatedAt.value = null;
-  error.value = null;
 }
 </script>
 
@@ -169,21 +150,6 @@ function clearFeelingForNewLetter() {
   @apply border-2 border-gray-900;
   @apply transition-colors;
   @apply hover:bg-gray-800;
-}
-
-.new-letter-section {
-  @apply text-center mt-8 pt-8;
-  @apply border-t border-gray-200;
-}
-
-.new-letter-button {
-  @apply px-6 py-2;
-  @apply bg-white text-gray-700;
-  @apply font-serif text-sm;
-  @apply rounded-none;
-  @apply border border-gray-300;
-  @apply transition-colors;
-  @apply hover:bg-gray-50;
 }
 
 .feeling-context {
