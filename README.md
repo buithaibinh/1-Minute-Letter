@@ -1,5 +1,7 @@
 # 1 Minute Letter
 
+https://1-minute-letter.vercel.app/
+
 A quiet emotional AI experience - receive a short letter from your future self.
 
 ## Project Structure
