@@ -23,12 +23,36 @@ export default defineNuxtConfig({
   app: {
     head: {
       title: '1 Minute Letter',
+      link: [
+        {
+          rel: 'icon',
+          type: 'image/svg+xml',
+          href: '/favicon.svg'
+        }
+      ],
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         {
           name: 'description',
           content: 'A quiet letter from your future self'
+        },
+        // OpenGraph tags for link sharing
+        {
+          property: 'og:title',
+          content: '1 Minute Letter'
+        },
+        {
+          property: 'og:description',
+          content: 'A quiet letter from your future self'
+        },
+        {
+          property: 'og:image',
+          content: '/og-image.svg'
+        },
+        {
+          property: 'og:type',
+          content: 'website'
         }
       ]
     }
