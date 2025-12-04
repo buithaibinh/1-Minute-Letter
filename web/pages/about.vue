@@ -33,6 +33,9 @@
           <p class="text-base leading-relaxed font-serif text-gray-700 mb-4">
             The letter is generated fresh each time (or once per day, stored locally in your browser). We don't store any data on our servers. Everything stays in your browser's localStorage.
           </p>
+          <p class="text-base leading-relaxed font-serif text-gray-700 mb-4">
+            <strong>Language detection:</strong> The letter is automatically written in the same language as your browser settings. We detect your browser's language (using the standard browser API) to determine which language to use. This is not tracking or behavioral analysis—it's simply reading your browser's language setting, which is public information. If your language isn't supported, the letter will be written in English. You can change the language by changing your browser's language settings.
+          </p>
         </section>
 
         <section class="mb-8">

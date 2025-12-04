@@ -4,6 +4,7 @@
 
 import { getTodayKey, isToday } from '~/utils/date';
 import { getLocalStorageItem, setLocalStorageItem, removeLocalStorageItem, type LetterData } from '~/composables/useLocalStorage';
+import { getBrowserLanguage } from '~/utils/language';
 
 export interface LetterResponse {
   letter: string;
@@ -48,10 +49,17 @@ export function saveLetter(letter: string, generatedAt: string): void {
 
 /**
  * Generate a new letter via API
+ * Automatically detects browser language and sends to API
  */
 export async function generateLetter(): Promise<LetterResponse> {
+  // Detect browser language
+  const language = getBrowserLanguage();
+
   const response = await $fetch<LetterResponse>('/api/letter', {
     method: 'POST',
+    body: {
+      language
+    }
   });
 
   return response;

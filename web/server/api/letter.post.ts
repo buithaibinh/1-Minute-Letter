@@ -22,6 +22,53 @@ export default defineEventHandler(async (event) => {
     });
   }
 
+  // Get language from request body, default to English
+  const body = await readBody(event).catch(() => ({}));
+  const requestedLanguage = body?.language || 'en';
+
+  // Map language code to language name for prompt
+  // Simple mapping for common languages, fallback to English
+  const languageMap: Record<string, string> = {
+    'en': 'English',
+    'vi': 'Vietnamese',
+    'es': 'Spanish',
+    'fr': 'French',
+    'de': 'German',
+    'it': 'Italian',
+    'pt': 'Portuguese',
+    'ja': 'Japanese',
+    'ko': 'Korean',
+    'zh': 'Chinese',
+    'ar': 'Arabic',
+    'ru': 'Russian',
+    'hi': 'Hindi',
+    'th': 'Thai',
+    'id': 'Indonesian',
+    'nl': 'Dutch',
+    'pl': 'Polish',
+    'tr': 'Turkish',
+    'sv': 'Swedish',
+    'da': 'Danish',
+    'no': 'Norwegian',
+    'fi': 'Finnish',
+    'cs': 'Czech',
+    'hu': 'Hungarian',
+    'ro': 'Romanian',
+    'uk': 'Ukrainian',
+    'el': 'Greek',
+    'he': 'Hebrew',
+    'bn': 'Bengali',
+    'ms': 'Malay',
+    'ta': 'Tamil',
+    'te': 'Telugu',
+    'ur': 'Urdu',
+    'fa': 'Persian',
+    'sw': 'Swahili'
+  };
+
+  const languageCode = requestedLanguage.toLowerCase();
+  const languageName = languageMap[languageCode] || 'English';
+
   // Prompt template for "future self" letter
   const prompt = `You are writing a short, quiet letter from the perspective of the reader's future self.
 
@@ -34,6 +81,7 @@ Guidelines:
 - Simply acknowledge their current state and offer quiet presence
 - No motivational language, no "you should", no "you can do it"
 - Just understanding and companionship
+- IMPORTANT: Write the entire letter in ${languageName}. The letter must be written completely in ${languageName}, not mixed with other languages.
 
 Write the letter now:`;
 
